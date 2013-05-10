@@ -1,141 +1,95 @@
-class Helper
-  def visit(path)
-  end
-  
-  def find_and_click(type,path)
-  end
-
-  def should_have_css(path)
-  end
-  
-  def should_not_have_css(path)
-  end
-  
-  def select(path)
-  end
-  
-  def click_button(path)
-  end
-  
-  def click_link(path)
-  end
-
-  def not_empty(items)
-  end
-
-  def is_currency(amount)
-  end
-
-  def should_have_xpath(path)
-  end
-
-  def verify(name)
-  end
-
-  def fill_in(val)
-  end
-
-  def update(information)
-  end
-
-  def should_not_have_content(content)
-  end
-end
-page = Helper.new
-
 Given(/^I am on the home page$/) do
-  page.visit('/home')
+ wait_for_elements_exist(["label marked:'home'"])
 end
 
 When(/^I click on SignIn link$/) do
-  page.find_and_click(:xpath,".//*[@id='SignIn']")
+  touch("detectorTypeLink marked:'singin_in' text:'Sing In")
 end
 
 Then(/^I should be in "(.*?)" page$/) do |sign_in|
-  page.should_have_css('sing_in')
+  check_element_exists("tableView label marked:'#{singin_in}")
 end
 
 When(/^I click SigninIn button$/) do
-  page.find_and_click(:xpath,".//*[@id='sign_in']")
+  touch("label  marked: 'singin_in")
 end
 
-
 Then(/^I should be on the home page\.$/) do
-  page.should_have_css('container')
+  check_element_exists("view:'tableViewCell' marked:'home' text:'home'")
 end
 
 Given(/^I am on the home page and not signed in$/) do
-  page.visit('/home')
-  page.should_have_css('singin_in')
+  check_element_exists("view:'tableViewCell' marked:'home' text:'home'")
+  check_element_exists("view:'tableViewCell'  marked:'singin_out text:'Signout'")
 end
 
 When(/^I give valid credentials "(.*?)" and "(.*?)"$/) do |username,password|
   # user = Factory.create(:admin)
-  page.fill_in(:with=>'user.#{username}')
-  page.fill_in(:with=>'user.#{password}')
+   set_text("textField marked:'username', 'userName'")
+  set_text("textField marked:'password', 'password'")
 end
 
-When(/^I click on "(.*?)" FOB$/) do |arg1|
-  page.find_and_click(:xpath,".//*[@id='Signout']")
+When(/^I click on "(.*?)" FOB$/) do |men|
+  touch("detectorTypeLink marked:'men_fob'  text:'men'")
 end
 
-Then(/^I should see "(.*?)" on Left Pane$/) do |arg1|
-  page.should_have_css('#{arg1}')
+Then(/^I should see "(.*?)" on Left Pane$/) do |mens|
+  check_element_exists("webView css:'left_pane' text:'mens'")
 end
 
 When(/^I click on "(.*?)"$/) do |shirts|
-  page.click_button('#{shirts}')
+  touch("view:'tableView' marked:'#{shirts}")
 end
 
 Then(/^it should be a browse page$/) do
-  page.should_have_css('browe_content')
+  check_element_exists("view:'tableView'  marked:'browse_page'")
 end
 
 When(/^I click on change Country from the footer$/) do
-  page.find_and_click(:xpath,".//*[@id='change_country']")
+  touch("view:'footer' label marked:'change-country'")
 end
 
 When(/^I select country "(.*?)" and Currency "(.*?)"$/) do |country, currency|
-  page.select('#{country}')
-  page.select('#{currency}')
+  touch("label  marked:'select' text:'country'")
+  touch("label  marked:'select' text:'currency'")
 end
 
 When(/^I click on "(.*?)" Button$/) do |save_and_continue|
-  page.find_and_click(:xpath,".//*[@id='#{save_and_continue}']")
+  touch("button  marked:'#{save_and_continue}")
 end
 
 Then(/^Iship Welcome Mat should be displayed$/) do
-  page.should_have_css('welcom_page')
+  check_element_exists("'iShipWelcomeMat  marked:'welcome_mat'")
 end
 
 Then(/^the page should be in Iship Mode where "(.*?)" should be displayed on the header and Footer$/) do |arg1|
-  page.should_have_css('ship_mode')
-  page.should_have_css('header')
-  page.should_have_css('footer')
+  check_element_exists("view:'headerClass'")
+  check_element_exists("view:'footerClass'")
+  check_element_exists("view: 'ishipMode'")
 end
 
 Then(/^I should not see the text "(.*?)" in the page$/) do |sign_out|
-  page.should_not_have_content('#{sign_out}')
+  check_element_should_not_exist("tableView text:'singin_out'")
 end
 
 Then(/^Go to US Site should be displayed in the footer$/) do
-  page.find_and_click(:xpath, '//h1')
+  check_element_exists("label marked:'go_to_us' text:'got to us'")
 end
 
 When(/^I click Create button$/) do
-  page.click_button('create')
+  touch("button marked:'create' text:'create'")
 end
 
 When(/^I enter new profile details in site$/) do
-  page.fill_in('profile_detail')
+  set_text("textField marked:'profile_detail' 'sample profile detail'")
 end
 
 When(/^I click on Create Profile button$/) do
-  page.click_button('create_profile')
+  touch("button marked='create_profile' text:'create_profile'")
 end
 
 When(/^I click on Signout link$/) do
-  page.click_button('sign_out')
+  page.click_button("button  marked='singin_out' text:'signout'")
 end
 
 
