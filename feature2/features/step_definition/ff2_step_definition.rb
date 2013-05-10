@@ -16,48 +16,49 @@ Then(/^I should be in "(.*?)" page$/) do |registry_capture_email|
 end
 
 When(/^I Enter the necessary credentials to create new registry$/) do
-  page.fill_in(:with=>'user.name')
-  page.fill_in(:with=>'user.password')
+  set_text("textField marked:'username', 'userName'")
+  set_text("textField marked:'password', 'password'")
 end
 
 When(/^I click on "(.*?)" Button$/) do |sign_in|
-  page.find_and_click(:xpath,".//*[@id='sign_in']")
+  touch("button marked: 'sign_in'")
 end
 
 When(/^Enter the create new registry page details$/) do
- page.fill_in(:with => 'detail')
+  wait_for_elements_exist("label marked:'page_registry' text:'page registry'")
+  set_text("textField marked:'registry_detail', 'registry some details'")
 end
 
 Then(/^I verify that the registry is created successfully$/) do
-  page.verify('verify')
+  check_element_exist("view:'registryClass' marked:'registry'")
 end
 
 When(/^I click on SignIn link$/) do
-  page.find_and_click(:xpath,".//*[@id='sign_in_link']")
+  touch("link marked:'signin")
 end
 
-When(/^I give valid credentials "(.*?)" and "(.*?)" for the given URL$/) do |arg1, arg2|
- # user = Factory.create(:admin)
- page.fill_in(:with => 'user.name')
- page.fill_in(:with => 'user.password')
+When(/^I give valid credentials "(.*?)" and "(.*?)" for the given URL$/) do |username, password|
+  set_text("textField marked:'username', 'userName'")
+  set_text("textField marked:'password', 'password'")
 end
 
 When(/^Navigate to The Registry Page$/) do
-  page.visit('/home/Registy')
+  touch("label marked: 'go_to_registry_page'")
 end
 
 When(/^I click on Manage button in Registry Manager page of the given URL$/) do
- page.find_and_click(:xpath,".//*[@id='manage']")
+ 
 end
 
 When(/^I click on the link to Edit Profile Account in BVR page$/) do
-  page.find_and_click(:xpath,".//*[@id='edit_profile']")
+  wait_for_elements_exist("label marked:'bvr_page'")
+  touch("label marked:'edit_profile' text:'edit Profile Account'")
 end
 
 When(/^I update the information of the Registrant$/) do
-  page.update('information')
+  set_text("textField marked:'information_of_registry', 'sample information is filled in'")
 end
 
 Then(/^I verify if the information is updated$/) do
-  page.verify('information')
+  check_element_exist("view:'information-update' textField text:'sample registered information'")
 end
