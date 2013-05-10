@@ -1,60 +1,18 @@
-class Helper
-  def visit(path)
-  end
-  
-  def find_and_click(type,path)
-  end
-
-  def should_have_css(path)
-  end
-  
-  def should_not_have_css(path)
-  end
-  
-  def select(path)
-  end
-  
-  def click_button(path)
-  end
-  
-  def click_link(path)
-  end
-
-  def not_empty(items)
-  end
-
-  def is_currency(amount)
-  end
-
-  def should_have_xpath(path)
-  end
-
-  def verify(name)
-  end
-
-  def fill_in(val)
-  end
-
-  def update(information)
-  end
-end
-page = Helper.new
-
-
 Given(/^I am on the home page$/) do
-  page.visit('/home')
+  wait_for_elements_exist(["label marked:'home'"])
 end
 
 When(/^I Navigate to The Registry Page$/) do
-  page.visit('/home/registry')
+  touch("button marked:'go_to_registry_page'")
+  wait_for_elements_exist(["label marked:'registry_page'"])
 end
 
 When(/^I click on Create Registry Link$/) do
-  page.find_and_click(:xpath,".//*[@id='create_registry']")
+  touch("button marked:'create_registry_page'")
 end
 
 Then(/^I should be in "(.*?)" page$/) do |registry_capture_email|
-  page.should_have_css('registry_capture_email')
+  wait_for_elements_exist("label marked: '#{registry_capture_email}'")
 end
 
 When(/^I Enter the necessary credentials to create new registry$/) do
