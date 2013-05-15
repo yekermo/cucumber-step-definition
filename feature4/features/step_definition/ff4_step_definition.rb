@@ -1,50 +1,60 @@
 Given(/^I am on the home page$/) do
-  wait_for_elements_exist(["label marked:'home'"])
+  visit("/home")
 end
 
 When(/^I click on "(.*?)"$/) do |beauty|
-  touch("button marked:'beauty' text:'beauty'")
+  click_button('beauty')
 end
 
 Then(/^I should see "(.*?)" in Left Pane below the header "(.*?)"$/) do |makeup, header|
-  check_element_exists("view:'webView'  css:'header' desendent css:'left_pane' ")
+   within(:xpath,"//div[@id='left_pane']") do
+     within(:xpath,"//div[@id='#{header}']") do
+      page.should have_content('#{makeup}')
+    end
+  end
 end
 
 When(/^I click on the First product from the browse page$/) do
-  check_element_exists("tabelViewCell index:0")
+  click_link("tabelViewCell index:0")
 end
 
 Then(/^Product PDP Page should be displayed$/) do
-  check_element_exists("view:'pdpClass' marked:'product_detail' text: 'product detail'")
+   page.should have_content('pdp page')
 end
 
 When(/^I click on change Country from the footer$/) do
-  touch("webView  css:'footer' css:'change_country'")
+  click_link('change_country')
 end
 
 When(/^I select country "(.*?)" and Currency "(.*?)"$/) do |country, currency|
-  touch("webView  css:'country'")
-  touch("webView  css:'currency'")
+   click_link('#{country}')
+   click_link('#{currency}')
 end
 
 When(/^I click on "(.*?)" Button$/) do |save_and_continue|
-  touch("button marked:'#{save_and_continue}' text:'save and continue'")
+   click_button('#{save_and_continue}')
 end
 
 Then(/^Iship Welcome Mat should be displayed$/) do
-  check_element_exists("webView   text:'welcome Mat")
+  page.should have_content('welcome mat')
 end
 
 Then(/^the page should be in Iship Mode where "(.*?)" should be displayed on the header and Footer$/) do |ship_mode|
- check_element_exists("view:'headerClass'")
-  check_element_exists("view:'footerClass'")
-  check_element_exists("view: 'ishipMode'")
+  page.should have_content('#{ship_mode}')
+  within(:xpath,"//div[@id='header']") do
+     page.should have_content('arg1')
+  end
+  within(:xpath,"//div[@id='footer']") do
+     page.should have_content('arg1')
+  end
 end
 
 Then(/^Error message "(.*?)" should be displayed in the PDP Page$/) do |error_message|
- check_element_exists("class:'pdpClass' marked:'#{error_message}'")
+ within(:xpath,"//div[@id='pdp_page']") do
+     page.should have_content('#{error_message}')
+  end
 end
 
 Then(/^for the product "(.*?)" button should not be displayed$/) do |product|
-  check_element_does_not_exist("button marked:'#{product}'")
+  page.should_not have_content('#{product}')
 end
